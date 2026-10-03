@@ -1,0 +1,15 @@
+{
+  "new_chat": "New Chat",
+  "search": "Search chats...",
+  "settings": "Settings",
+  "recent": "Recent",
+  "message_placeholder": "Ask Vishwakarma anything...",
+  "language": "Language",
+  "theme": "Theme",
+  "light": "Light",
+  "dark": "Dark",
+  "system": "System",
+  "model": "Model",
+  "mode": "Mode",
+  "generate": "Generate"
+}
