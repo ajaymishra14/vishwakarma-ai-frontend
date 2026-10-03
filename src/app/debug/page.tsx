@@ -6,16 +6,21 @@ import ModulePage from "@/components/workspace/ModulePage";
 
 export default function DebugPage() {
   const [input, setInput] = useState("");
-  const [result, setResult] = useState<string | null>(null);\n  const [analyzing, setAnalyzing] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+  const [analyzing, setAnalyzing] = useState(false);
 
   const analyze = () => {
-    if (!input.trim() || analyzing) return;\n    setAnalyzing(true);
+    if (!input.trim() || analyzing) return;
+    setAnalyzing(true);
     const checks = [
       input.includes("undefined") ? "Possible undefined value detected." : "No obvious undefined reference found.",
       input.includes("null") ? "Null handling should be reviewed." : "No explicit null handling issue detected.",
       input.includes("TODO") ? "TODO marker found; implementation may be incomplete." : "No TODO marker found.",
     ];
-    setResult(checks.join("\n"));
+    window.setTimeout(() => {
+      setResult(checks.join("\n"));
+      setAnalyzing(false);
+    }, 350);
   };
 
   return (
