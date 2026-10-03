@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Bug, Code2, Files, Sparkles, Workflow } from "lucide-react";
+import { ArrowRight, Bug, Code2, Files, LogIn, Sparkles, Workflow } from "lucide-react";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { useChatStore } from "@/lib/chat-store";
 
@@ -47,6 +47,15 @@ export default function Home() {
                 <div className="mt-1 text-xs leading-5 text-white/35">{description}</div>
               </Link>
             ))}
+          </div>
+
+          <div className="mx-auto mt-4 flex w-full max-w-3xl items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.02] p-3">
+            <Link href="/sign-in" className="flex items-center gap-2 rounded-xl border border-white/15 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/10">
+              <LogIn size={15} /> Sign in
+            </Link>
+            <Link href="/sign-up" className="rounded-xl bg-white px-5 py-2.5 text-sm font-medium text-black hover:bg-white/85">
+              Sign up
+            </Link>
           </div>
         </div>
       </main>
