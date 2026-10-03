@@ -8,7 +8,20 @@ type LocalFile = { id: string; name: string; size: number; type: string };
 
 export default function FilesPage() {
   const [files, setFiles] = useState<LocalFile[]>([]);
-  const [query, setQuery] = useState("");\n  const [ready, setReady] = useState(false);\n\n  useEffect(() => {\n    try {\n      const saved = localStorage.getItem("vishwakarma-files");\n      if (saved) setFiles(JSON.parse(saved));\n    } catch {}\n    setReady(true);\n  }, []);\n\n  useEffect(() => {\n    if (ready) localStorage.setItem("vishwakarma-files", JSON.stringify(files));\n  }, [files, ready]);
+  const [query, setQuery] = useState("");
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("vishwakarma-files");
+      if (saved) setFiles(JSON.parse(saved));
+    } catch {}
+    setReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (ready) localStorage.setItem("vishwakarma-files", JSON.stringify(files));
+  }, [files, ready]);
 
   const upload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selected = Array.from(event.target.files ?? []);
