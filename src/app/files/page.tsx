@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { File, FileText, Folder, Search, Trash2, Upload } from "lucide-react";
 import ModulePage from "@/components/workspace/ModulePage";
 
@@ -8,7 +8,7 @@ type LocalFile = { id: string; name: string; size: number; type: string };
 
 export default function FilesPage() {
   const [files, setFiles] = useState<LocalFile[]>([]);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");\n  const [ready, setReady] = useState(false);\n\n  useEffect(() => {\n    try {\n      const saved = localStorage.getItem("vishwakarma-files");\n      if (saved) setFiles(JSON.parse(saved));\n    } catch {}\n    setReady(true);\n  }, []);\n\n  useEffect(() => {\n    if (ready) localStorage.setItem("vishwakarma-files", JSON.stringify(files));\n  }, [files, ready]);
 
   const upload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selected = Array.from(event.target.files ?? []);
