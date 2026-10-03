@@ -1,12 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import {
-  ArrowUp,
-  Paperclip,
-  Square,
-  SlidersHorizontal,
-} from "lucide-react";
+import { useRef, useState } from "react";
+import { ArrowUp, Paperclip, Square, SlidersHorizontal, X } from "lucide-react";
 
 type ChatComposerProps = {
   onSend: (message: string) => void;
@@ -19,31 +14,59 @@ export default function ChatComposer({
   isGenerating = false,
   onStop,
 }: ChatComposerProps) {
-  const [value, setValue] = useState("");\n  const [attached, setAttached] = useState<string | null>(null);\n  const fileInput = useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState("");
+  const [attached, setAttached] = useState<File | null>(null);
+  const fileInput = useRef<HTMLInputElement>(null);
 
   const submit = () => {
     const message = value.trim();
+    if ((!message && !attached) || isGenerating) return;
 
-    if (!message || isGenerating) {
-      return;
-    }
+    const attachmentText = attached
+      ? `\n\n[Attached file: ${attached.name} (${Math.ceil(attached.size / 1024)} KB)]`
+      : "";
 
-    onSend(attached ? `${message}\\n\\n[Attached file: ${attached}]` : message);
-    setValue("");\n    setAttached(null);
+    onSend(message + attachmentText);
+    setValue("");
+    setAttached(null);
+    if (fileInput.current) fileInput.current.value = "";
   };
 
   return (
     <div className="border-t border-white/10 bg-[#0b0d10] p-4">
       <div className="mx-auto max-w-3xl">
         <div className="rounded-2xl border border-white/10 bg-[#15181e] shadow-2xl">
-          <input ref={fileInput} type="file" className="hidden" onChange={(event) => setAttached(event.target.files?.[0]?.name ?? null)} />\n          {attached && <div className="mx-4 mt-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-white/50">Attached: {attached}</div>}\n\n          <textarea
+          <input
+            ref={fileInput}
+            type="file"
+            className="hidden"
+            accept="*/*"
+            onChange={(event) => setAttached(event.target.files?.[0] ?? null)}
+          />
+
+          {attached && (
+            <div className="mx-4 mt-3 flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs">
+              <Paperclip size={13} className="shrink-0 opacity-50" />
+              <span className="min-w-0 flex-1 truncate">{attached.name}</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setAttached(null);
+                  if (fileInput.current) fileInput.current.value = "";
+                }}
+                aria-label="Remove attachment"
+                className="rounded p-1 opacity-50 hover:bg-white/10 hover:opacity-100"
+              >
+                <X size={13} />
+              </button>
+            </div>
+          )}
+
+          <textarea
             value={value}
             onChange={(event) => setValue(event.target.value)}
             onKeyDown={(event) => {
-              if (
-                event.key === "Enter" &&
-                !event.shiftKey
-              ) {
+              if (event.key === "Enter" && !event.shiftKey) {
                 event.preventDefault();
                 submit();
               }
@@ -56,13 +79,15 @@ export default function ChatComposer({
           <div className="flex items-center justify-between border-t border-white/10 px-3 py-2">
             <div className="flex items-center gap-1">
               <button
+                type="button"
                 className="rounded-lg p-2 text-white/40 hover:bg-white/5 hover:text-white"
-                aria-label="Attach file"\n                onClick={() => fileInput.current?.click()}
+                aria-label="Attach file"
+                onClick={() => fileInput.current?.click()}
               >
                 <Paperclip size={18} />
               </button>
-
               <button
+                type="button"
                 className="rounded-lg p-2 text-white/40 hover:bg-white/5 hover:text-white"
                 aria-label="Options"
               >
@@ -72,6 +97,7 @@ export default function ChatComposer({
 
             {isGenerating ? (
               <button
+                type="button"
                 onClick={onStop}
                 className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-black"
                 aria-label="Stop generation"
@@ -80,8 +106,9 @@ export default function ChatComposer({
               </button>
             ) : (
               <button
+                type="button"
                 onClick={submit}
-                disabled={!value.trim()}
+                disabled={!value.trim() && !attached}
                 className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-black transition disabled:cursor-not-allowed disabled:opacity-30"
                 aria-label="Send message"
               >
