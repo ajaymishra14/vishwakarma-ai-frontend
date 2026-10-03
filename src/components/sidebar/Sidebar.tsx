@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   Sparkles,
   MessageSquare,
@@ -14,6 +14,7 @@ import {
   Settings,
   Plus,
   Trash2,
+  UserRound,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useChatStore } from "@/lib/chat-store";
@@ -32,6 +33,14 @@ const navigation = [
 export default function Sidebar() {
   const pathname = usePathname();
   const [query, setQuery] = useState("");
+  const [profile, setProfile] = useState<{name: string; photo: string | null}>({ name: "Ajay", photo: null });
+
+  useEffect(() => {
+    const load = () => setProfile({ name: localStorage.getItem("vishwakarma-profile-name") || "Ajay", photo: localStorage.getItem("vishwakarma-profile-photo") });
+    load();
+    window.addEventListener("vishwakarma-profile-updated", load);
+    return () => window.removeEventListener("vishwakarma-profile-updated", load);
+  }, []);
 
   const conversations = useChatStore(
     (state) => state.conversations
