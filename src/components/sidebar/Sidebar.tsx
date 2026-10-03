@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import {
   Sparkles,
   MessageSquare,
@@ -69,7 +70,7 @@ export default function Sidebar() {
         </button>
       </div>
 
-      <nav className="space-y-1 px-3">
+      <div className="px-3 pb-2">\n        <div className="relative">\n          <Search size={14} className="pointer-events-none absolute left-3 top-2.5 text-white/25" />\n          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search chats" aria-label="Search chats" className="w-full rounded-xl border border-white/10 bg-white/[0.03] py-2 pl-9 pr-3 text-xs text-white outline-none placeholder:text-white/25 focus:border-white/20" />\n        </div>\n      </div>\n\n      <nav className="space-y-1 px-3">
         {navigation.slice(1).map((item) => {
           const Icon = item.icon;
           const active =
@@ -116,7 +117,7 @@ export default function Sidebar() {
                     onClick={() =>
                       setActiveConversation(conversation.id)
                     }
-                    className="min-w-0 flex-1 truncate px-3 py-2 text-left text-xs text-white/50 hover:text-white"
+                    className={`min-w-0 flex-1 truncate rounded-lg px-3 py-2 text-left text-xs hover:text-white ${activeConversationId === conversation.id ? "bg-white/10 text-white" : "text-white/50"}`}
                   >
                     {conversation.title}
                   </button>
