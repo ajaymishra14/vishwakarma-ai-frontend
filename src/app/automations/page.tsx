@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check, Clock3, Play, Plus, Trash2, Workflow } from "lucide-react";
 import ModulePage from "@/components/workspace/ModulePage";
 
 type Automation = { id: string; name: string; schedule: string; enabled: boolean };
 
 export default function AutomationsPage() {
-  const [items, setItems] = useState<Automation[]>([]);
+  const [items, setItems] = useState<Automation[]>([]);\n  const [ready, setReady] = useState(false);\n\n  useEffect(() => {\n    try {\n      const saved = localStorage.getItem("vishwakarma-automations");\n      if (saved) setItems(JSON.parse(saved));\n    } catch {}\n    setReady(true);\n  }, []);\n\n  useEffect(() => {\n    if (ready) localStorage.setItem("vishwakarma-automations", JSON.stringify(items));\n  }, [items, ready]);
   const add = () => {
     const name = window.prompt("Automation name");
     if (!name?.trim()) return;
@@ -24,7 +24,7 @@ export default function AutomationsPage() {
             <div className="min-w-0 flex-1"><div className="truncate text-sm font-medium">{item.name}</div><div className="mt-1 flex items-center gap-2 text-xs text-white/30"><Clock3 size={13} />{item.schedule}</div></div>
             <button onClick={() => setItems((v) => v.map((a) => a.id === item.id ? { ...a, enabled: !a.enabled } : a))} className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs">{item.enabled ? <><Check size={13} /> Enabled</> : "Disabled"}</button>
             <button onClick={() => setItems((v) => v.filter((a) => a.id !== item.id))} className="rounded-lg p-2 text-white/25 hover:bg-white/5 hover:text-white"><Trash2 size={15} /></button>
-            <button className="flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 text-xs hover:bg-white/15"><Play size={13} /> Run</button>
+            <button onClick={() => window.alert(`Automation "${item.name}" is ready to run when the execution backend is connected.`)} className="flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 text-xs hover:bg-white/15"><Play size={13} /> Run</button>
           </div>
         ))}
       </div>
