@@ -6,10 +6,10 @@ import ModulePage from "@/components/workspace/ModulePage";
 
 export default function DebugPage() {
   const [input, setInput] = useState("");
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<string | null>(null);\n  const [analyzing, setAnalyzing] = useState(false);
 
   const analyze = () => {
-    if (!input.trim()) return;
+    if (!input.trim() || analyzing) return;\n    setAnalyzing(true);
     const checks = [
       input.includes("undefined") ? "Possible undefined value detected." : "No obvious undefined reference found.",
       input.includes("null") ? "Null handling should be reviewed." : "No explicit null handling issue detected.",
@@ -24,7 +24,7 @@ export default function DebugPage() {
         <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-4">
           <div className="mb-3 flex items-center gap-2 text-sm font-medium"><Bug size={16} /> Diagnostic input</div>
           <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="Paste an error, stack trace, log, or code snippet..." className="min-h-72 w-full resize-y rounded-xl border border-white/10 bg-[#090b0e] p-4 font-mono text-xs leading-5 outline-none placeholder:text-white/20 focus:border-white/25" />
-          <button onClick={analyze} className="mt-3 flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-medium text-black"><Search size={15} /> Analyze</button>
+          <button onClick={analyze} disabled={analyzing || !input.trim()} className="mt-3 flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-medium text-black disabled:cursor-not-allowed disabled:opacity-40"><Search size={15} /> {analyzing ? "Analyzing..." : "Analyze"}</button>
         </div>
         <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-5">
           <div className="flex items-center gap-2 text-sm font-medium"><AlertTriangle size={16} /> Findings</div>
