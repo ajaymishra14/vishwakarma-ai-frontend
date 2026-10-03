@@ -7,7 +7,20 @@ import ModulePage from "@/components/workspace/ModulePage";
 type Automation = { id: string; name: string; schedule: string; enabled: boolean };
 
 export default function AutomationsPage() {
-  const [items, setItems] = useState<Automation[]>([]);\n  const [ready, setReady] = useState(false);\n\n  useEffect(() => {\n    try {\n      const saved = localStorage.getItem("vishwakarma-automations");\n      if (saved) setItems(JSON.parse(saved));\n    } catch {}\n    setReady(true);\n  }, []);\n\n  useEffect(() => {\n    if (ready) localStorage.setItem("vishwakarma-automations", JSON.stringify(items));\n  }, [items, ready]);
+  const [items, setItems] = useState<Automation[]>([]);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("vishwakarma-automations");
+      if (saved) setItems(JSON.parse(saved));
+    } catch {}
+    setReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (ready) localStorage.setItem("vishwakarma-automations", JSON.stringify(items));
+  }, [items, ready]);
   const add = () => {
     const name = window.prompt("Automation name");
     if (!name?.trim()) return;
