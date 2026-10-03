@@ -12,7 +12,9 @@ export default function SignInPage() {
     <main className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4 text-[var(--foreground)]">
       <div className="w-full max-w-md">
         <Link href="/" className="mb-8 flex items-center justify-center gap-2 text-sm font-semibold">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-black text-white dark:bg-white dark:text-black"><Sparkles size={17} /></span>
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-400 text-white shadow-lg shadow-violet-500/20 dark:border-white/10">
+            <Sparkles size={18} />
+          </span>
           Vishwakarma AI
         </Link>
         <section className="rounded-3xl border border-black/10 bg-white p-6 shadow-xl dark:border-white/10 dark:bg-[#111318] sm:p-8">
