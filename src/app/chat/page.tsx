@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Sparkles } from "lucide-react";
+import { Sparkles, MoreHorizontal, Trash2 } from "lucide-react";
 
 import Sidebar from "@/components/sidebar/Sidebar";
 import MessageList from "@/components/chat/MessageList";
