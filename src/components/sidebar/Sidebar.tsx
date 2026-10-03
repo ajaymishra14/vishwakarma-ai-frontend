@@ -31,6 +31,7 @@ const navigation = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [query, setQuery] = useState("");
 
   const conversations = useChatStore(
     (state) => state.conversations
@@ -70,7 +71,14 @@ export default function Sidebar() {
         </button>
       </div>
 
-      <div className="px-3 pb-2">\n        <div className="relative">\n          <Search size={14} className="pointer-events-none absolute left-3 top-2.5 text-white/25" />\n          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search chats" aria-label="Search chats" className="w-full rounded-xl border border-white/10 bg-white/[0.03] py-2 pl-9 pr-3 text-xs text-white outline-none placeholder:text-white/25 focus:border-white/20" />\n        </div>\n      </div>\n\n      <nav className="space-y-1 px-3">
+      <div className="px-3 pb-2">
+        <div className="relative">
+          <Search size={14} className="pointer-events-none absolute left-3 top-2.5 text-white/25" />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search chats" aria-label="Search chats" className="w-full rounded-xl border border-white/10 bg-white/[0.03] py-2 pl-9 pr-3 text-xs text-white outline-none placeholder:text-white/25 focus:border-white/20" />
+        </div>
+      </div>
+
+      <nav className="space-y-1 px-3">
         {navigation.slice(1).map((item) => {
           const Icon = item.icon;
           const active =
