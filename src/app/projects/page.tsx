@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FolderKanban, Plus, Search, Trash2 } from "lucide-react";
 import ModulePage from "@/components/workspace/ModulePage";
 
@@ -8,7 +8,7 @@ type Project = { id: string; name: string; description: string };
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");\n  const [ready, setReady] = useState(false);\n\n  useEffect(() => {\n    try {\n      const saved = localStorage.getItem("vishwakarma-projects");\n      if (saved) setProjects(JSON.parse(saved));\n    } catch {}\n    setReady(true);\n  }, []);\n\n  useEffect(() => {\n    if (ready) localStorage.setItem("vishwakarma-projects", JSON.stringify(projects));\n  }, [projects, ready]);
 
   const create = () => {
     const name = window.prompt("Project name");
