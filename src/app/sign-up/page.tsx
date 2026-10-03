@@ -11,7 +11,12 @@ export default function SignUpPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[var(--background)] px-4 text-[var(--foreground)]">
       <div className="w-full max-w-md">
-        <Link href="/" className="mb-8 flex items-center justify-center gap-2 text-sm font-semibold"><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-black text-white dark:bg-white dark:text-black"><Sparkles size={17} /></span>Vishwakarma AI</Link>
+        <Link href="/" className="mb-8 flex items-center justify-center gap-2 text-sm font-semibold">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-400 text-white shadow-lg shadow-violet-500/20 dark:border-white/10">
+            <Sparkles size={18} />
+          </span>
+          Vishwakarma AI
+        </Link>
         <section className="rounded-3xl border border-black/10 bg-white p-6 shadow-xl dark:border-white/10 dark:bg-[#111318] sm:p-8">
           <div className="text-center"><h1 className="text-2xl font-semibold">Create your account</h1><p className="mt-2 text-sm opacity-55">Start building with Vishwakarma AI</p></div>
           <button onClick={() => window.alert("Google sign-up will use the configured authentication gateway.")} className="mt-7 flex w-full items-center justify-center gap-3 rounded-xl border border-black/10 py-3 text-sm font-medium hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/5"><span className="font-bold">G</span> Continue with Google</button>
