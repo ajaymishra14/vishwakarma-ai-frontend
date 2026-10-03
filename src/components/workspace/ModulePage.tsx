@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import Sidebar from "@/components/sidebar/Sidebar";
 
 type ModulePageProps = {
